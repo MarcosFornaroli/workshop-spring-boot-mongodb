@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.workshopmongo.domain.User;
-import com.example.workshopmongo.dto.UserDto;
+import com.example.workshopmongo.dto.UserDTO;
 import com.example.workshopmongo.services.UserService;
 
 @RestController
@@ -25,24 +25,24 @@ public class UserResource {
 	private UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<UserDto>> findAll() {
+	public ResponseEntity<List<UserDTO>> findAll() {
 		List<User> list = userService.findAll();
-		List<UserDto> listDto = list.stream().map(x -> new UserDto(x)).collect(Collectors.toList());
+		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		
 		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	public ResponseEntity<UserDto> findById(@PathVariable String id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		
 		User obj = userService.findById(id);
 		
-		return ResponseEntity.ok().body(new UserDto(obj));
+		return ResponseEntity.ok().body(new UserDTO(obj));
 		
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody UserDto objDto) {
+	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {
 		
 		User obj = userService.fromDto(objDto);
 		obj = userService.insert(obj);
@@ -62,7 +62,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody UserDto objDto, @PathVariable String id) {
+	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
 		
 		User obj = userService.fromDto(objDto);
 		obj.setId(id);
