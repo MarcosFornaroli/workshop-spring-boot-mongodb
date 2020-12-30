@@ -32,12 +32,21 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value = "/titlesearch", method=RequestMethod.GET)
-	public ResponseEntity<List<Post>> findByTitleId(@RequestParam(value="text", defaultValue = "") String text) {
+	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue = "") String text) {
 		
 		text = URL.decodeParam(text);
 		List<Post> list = postService.findByTitle(text);
 		
 		return ResponseEntity.ok().body(list);
-		
 	}
+	
+	@RequestMapping(value = "/titlesearch2", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> findBySearchTitleId(@RequestParam(value="text", defaultValue = "") String text) {
+		
+		text = URL.decodeParam(text);
+		List<Post> list = postService.findBySearchTitle(text);
+		
+		return ResponseEntity.ok().body(list);
+	}
+	
 }
